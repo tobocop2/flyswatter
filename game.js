@@ -13,6 +13,9 @@ var swatSpeedY = 0;
 var swatAcceleration = 0.2;
 var swatMaxSpeed = 5;
 var isSwatting = false;
+var flySpeedMultiplier = 1; // Initial speed multiplier
+var flyAcceleration = 0.02; // Acceleration rate for fly speed increase
+var fliesSwatted = 0; // Counter for the number of flies swatted
 
 // Function to generate random starting positions and directions for the flies
 function generateFlyData() {
@@ -43,8 +46,8 @@ function updateFlyPositions() {
     var flyData = fly.data;
     var flyElement = fly.element;
 
-    flyData.x += flyData.dx;
-    flyData.y += flyData.dy;
+    flyData.x += flyData.dx * flySpeedMultiplier;
+    flyData.y += flyData.dy * flySpeedMultiplier;
 
     // Check if the fly has hit the boundaries of the game container
     if (
@@ -215,3 +218,15 @@ function updateSwatterPosition() {
   swatter.style.left = swatX + "px";
   swatter.style.top = swatY + "px";
 }
+
+// Adjust the game difficulty based on the score
+function adjustGameDifficulty() {
+  if (score >= 25 && score % 25 === 0) {
+    maxFlies += 2; // Increase the maximum number of flies
+    flySpeedMultiplier += 0.5; // Increase the speed multiplier for flies
+    flyAcceleration += 0.01; // Increase the acceleration rate for fly speed increase
+  }
+}
+
+// Function to update the game difficulty at a regular interval
+setInterval(adjustGameDifficulty, 1000);
