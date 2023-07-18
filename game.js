@@ -187,6 +187,27 @@ document.addEventListener("mouseup", function (event) {
   }
 });
 
+// Event listener for touch start event
+document.addEventListener("touchstart", function (event) {
+  handleTouch(event.touches[0]);
+});
+
+// Event listener for touch move event
+document.addEventListener("touchmove", function (event) {
+  handleTouch(event.touches[0]);
+});
+
+// Function to handle touch events
+function handleTouch(touch) {
+  swatX = touch.clientX - gameContainer.getBoundingClientRect().left - swatter.offsetWidth / 2;
+  swatY = touch.clientY - gameContainer.getBoundingClientRect().top - swatter.offsetHeight / 2;
+}
+
+// Event listener for touch end event
+document.addEventListener("touchend", function () {
+  isSwatting = false;
+});
+
 // Function to update the swatter position
 function updateSwatterPosition() {
   swatX = Math.max(0, Math.min(swatX, containerWidth - swatter.offsetWidth));
